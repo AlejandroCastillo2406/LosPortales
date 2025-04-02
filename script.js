@@ -44,7 +44,7 @@ const data = [
         "nombre": "Pestañas",
         "descripcion": "Accesorio único para complementar tu look.",
         "precio": "$5",
-        "imagenes": ["images/pestaña.jpeg"],
+        "imagenes": ["images/pestaña.jpeg","images/pestaña.jpeg"],
         "categoria": "Accesorios"
     },
     {
