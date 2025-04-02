@@ -1,10 +1,5 @@
 fetch('data/ropa.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al cargar el JSON: ' + response.statusText);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
         const productosDiv = document.getElementById('productos');
         const categoryFilter = document.getElementById('categoryFilter');
@@ -43,6 +38,7 @@ fetch('data/ropa.json')
                 const id = card.getAttribute('data-id');
                 const producto = productos.find(p => p.id == id);
 
+                // Actualizar el modal
                 document.getElementById('productModalLabel').textContent = producto.nombre;
                 document.getElementById('productDescription').textContent = producto.descripcion;
                 document.getElementById('productPrice').textContent = producto.precio;
@@ -56,15 +52,15 @@ fetch('data/ropa.json')
                     carouselImages.appendChild(div);
                 });
 
-                // Mostrar u ocultar los botones del carrusel según la cantidad de imágenes
-                const carouselPrev = document.querySelector('.carousel-control-prev');
-                const carouselNext = document.querySelector('.carousel-control-next');
+                // Mostrar u ocultar botones del carrusel
+                const prevButton = document.querySelector('.carousel-control-prev');
+                const nextButton = document.querySelector('.carousel-control-next');
                 if (producto.imagenes.length > 1) {
-                    carouselPrev.style.display = 'block';
-                    carouselNext.style.display = 'block';
+                    prevButton.style.display = 'block';
+                    nextButton.style.display = 'block';
                 } else {
-                    carouselPrev.style.display = 'none';
-                    carouselNext.style.display = 'none';
+                    prevButton.style.display = 'none';
+                    nextButton.style.display = 'none';
                 }
             }
         });
