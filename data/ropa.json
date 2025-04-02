@@ -44,7 +44,7 @@
         "nombre": "Pestañas",
         "descripcion": "Accesorio único para complementar tu look.",
         "precio": "$5",
-        "imagenes": ["images/pestaña.jpeg", "images/pestaña2.jpeg", "images/pestaña3.jpeg"],
+        "imagenes": ["images/pestaña.jpeg", "images/pestaña2.jpeg"],
         "categoria": "Accesorios"
     },
     {
