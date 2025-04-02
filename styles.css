@@ -4,15 +4,17 @@ body {
     padding: 0;
     background: #f8f9fa;
     color: #333;
+    scroll-behavior: smooth;
 }
 
 .header {
-    background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%); /* Gradiente oscuro y elegante */
+    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%); /* Gradiente moderno y elegante */
     padding: 120px 0;
     color: white;
     text-align: center;
     position: relative;
     overflow: hidden;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* Corte diagonal */
 }
 
 .header::before {
@@ -22,32 +24,80 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 70%); /* Efecto de luz */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.05" d="M0,128L48,112C96,96,192,64,288,69.3C384,75,480,117,576,138.7C672,160,768,160,864,144C960,128,1056,96,1152,90.7C1248,85,1344,107,1392,117.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+    background-size: cover;
     z-index: 1;
+    opacity: 0.8;
 }
 
 .header h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 5rem;
+    font-size: 5.5rem;
     margin-bottom: 15px;
     position: relative;
     z-index: 2;
     text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    animation: fadeInUp 1.2s ease;
 }
 
 .header p {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 300;
     position: relative;
     z-index: 2;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.cta-btn {
+    background: #fff;
+    color: #8e2de2;
+    font-weight: bold;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1.8s ease;
+    z-index: 10;
+    position: relative;
+}
+
+.cta-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    background: #f8f9fa;
 }
 
 .filters {
     background-color: #fff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    padding: 25px 0;
     margin-bottom: 30px;
+    border-radius: 0 0 30px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.filters.scrolled {
+    padding: 15px 0;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
 .filters .form-label {
@@ -64,10 +114,43 @@ body {
     border: 1px solid #ddd;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+    min-width: 150px;
+    background: #fff;
 }
 
 .filters .form-select:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.search-bar {
+    position: relative;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    padding-right: 40px;
+}
+
+.search-bar input:focus {
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border-color: #8e2de2;
+}
+
+.search-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8e2de2;
 }
 
 .gallery {
@@ -79,29 +162,107 @@ body {
     background: #fff;
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    position: relative;
 }
 
 .gallery .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.gallery .card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+    transition: height 0.5s ease;
+    z-index: -1;
+    border-radius: 15px;
+}
+
+.gallery .card:hover::after {
+    height: 5px;
 }
 
 .gallery img {
     width: 100%;
     height: 300px;
     object-fit: cover;
-    border-bottom: 2px solid #ddd;
+    transition: all 0.5s ease;
+}
+
+.gallery .card:hover img {
+    transform: scale(1.05);
 }
 
 .gallery .card-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     text-align: center;
     margin: 15px 0;
     color: #222;
+    transition: all 0.3s ease;
+}
+
+.gallery .card:hover .card-title {
+    color: #8e2de2;
+}
+
+.product-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.product-price {
+    font-size: 1.3rem;
+    color: #8e2de2;
+    font-weight: bold;
+    margin: 5px 0 10px;
+}
+
+.category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(142, 45, 226, 0.85);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    z-index: 10;
+}
+
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 15px;
+}
+
+.action-btn {
+    padding: 8px 0;
+    border: none;
+    background: transparent;
+    color: #8e2de2;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.action-btn:hover {
+    color: #4a00e0;
+    transform: translateY(-2px);
+}
+
+.action-btn i {
+    margin-right: 5px;
 }
 
 .carousel-item img {
@@ -112,20 +273,389 @@ body {
 }
 
 .modal-content {
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
     background: #fff;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+    color: white;
+    border: none;
+    padding: 20px 30px;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+}
+
+.modal-body {
+    padding: 30px;
 }
 
 .modal-body p {
     font-size: 1.1rem;
     color: #444;
+    line-height: 1.6;
+}
+
+.product-detail-price {
+    font-size: 2rem;
+    color: #8e2de2;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.product-cta {
+    background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(142, 45, 226, 0.3);
+}
+
+.product-cta:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(142, 45, 226, 0.4);
+}
+
+.carousel-control-prev, .carousel-control-next {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.8;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    filter: invert(1) grayscale(100%) brightness(0.8);
+}
+
+.carousel-indicators {
+    bottom: -50px;
+}
+
+.carousel-indicators button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    opacity: 0.5;
+}
+
+.carousel-indicators .active {
+    background-color: #8e2de2;
+    opacity: 1;
 }
 
 .footer {
     background: linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%);
     color: white;
     font-size: 1rem;
-    padding: 20px 0;
+    padding: 60px 0 30px;
     text-align: center;
+    position: relative;
+    margin-top: 80px;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: #f8f9fa;
+    clip-path: ellipse(50% 70px at 50% 0%);
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.footer h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.social-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 10px;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background: white;
+    color: #4a00e0;
+    transform: translateY(-5px);
+}
+
+.copyright {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Whatsapp Floating Button */
+.whatsapp-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Animaciones para los productos */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+/* Loader */
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+
+.loader div {
+    width: 15px;
+    height: 15px;
+    background: #8e2de2;
+    border-radius: 50%;
+    margin: 0 5px;
+    animation: bounce 0.5s infinite alternate;
+}
+
+.loader div:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.loader div:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes bounce {
+    to {
+        transform: translateY(-15px);
+    }
+}
+
+/* Botón de regreso arriba */
+.back-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: #8e2de2;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background: #4a00e0;
+    transform: translateY(-5px);
+}
+
+/* Notificación de producto agregado */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #8e2de2;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    transition: all 0.3s ease;
+    transform: translateX(150%);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Estilos responsivos */
+@media (max-width: 992px) {
+    .header h1 {
+        font-size: 4rem;
+    }
+    
+    .header p {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 80px 0;
+    }
+    
+    .header h1 {
+        font-size: 3rem;
+    }
+    
+    .header p {
+        font-size: 1.2rem;
+    }
+    
+    .gallery img {
+        height: 250px;
+    }
+    
+    .carousel-item img {
+        height: 350px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .filters {
+        padding: 15px 0;
+    }
+    
+    .filters .form-label, .filters .form-select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .gallery .card-title {
+        font-size: 1.3rem;
+    }
+    
+    .carousel-item img {
+        height: 250px;
+    }
+    
+    .whatsapp-btn, .back-to-top {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        bottom: 20px;
+    }
+    
+    .back-to-top {
+        bottom: 80px;
+    }
+}
+
+/* Estilos para pantallas grandes */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1320px;
+    }
+}
+
+/* Efectos hover para galería de productos */
+.gallery .card .hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(142, 45, 226, 0.7);
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+    z-index: 5;
+}
+
+.gallery .card:hover .hover-overlay {
+    opacity: 1;
+}
+
+.gallery .view-details {
+    background: white;
+    color: #8e2de2;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: bold;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.4s ease;
+    transition-delay: 0.1s;
+}
+
+.gallery .card:hover .view-details {
+    transform: translateY(0);
+    opacity: 1;
 }
