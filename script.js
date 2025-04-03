@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', function() {
             { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
             { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
             { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
+        ],
+        defecto: [
+            { nombre: 'Top', imagen: 'images/mujer-top.jpg', categoria: 'top' },
+            { nombre: 'Blusa', imagen: 'images/mujer-blusa.jpg', categoria: 'blusa' },
+            { nombre: 'Falda', imagen: 'images/mujer-falda.jpg', categoria: 'falda' },
+            { nombre: 'Short', imagen: 'images/mujer-short.jpg', categoria: 'short' },
+            { nombre: 'Camisa', imagen: 'images/hombre-camisa.jpg', categoria: 'camisa' },
+            { nombre: 'Short', imagen: 'images/hombre-short.jpg', categoria: 'short' },
+            { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
+            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
+            { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
         ]
     };
 
@@ -154,7 +165,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('filter-all').addEventListener('click', (e) => {
                 e.preventDefault();
                 mostrarProductos(productos);
-                mostrarCategorias('mujer'); // Puedes cambiar esto si quieres mostrar otras categorías por defecto
+                mostrarCategorias('defecto'); // Puedes cambiar esto si quieres mostrar otras categorías por defecto
             });
 
             document.getElementById('filter-mujer').addEventListener('click', (e) => {
