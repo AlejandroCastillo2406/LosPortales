@@ -32,16 +32,10 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Elegancia Atemporal</h1>
-            <p>Descubre nuestra nueva colección exclusiva, diseñada para aquellos que aprecian la verdadera artesanía y el lujo discreto.</p>
-            <a href="#" class="btn">Explorar Colección</a>
-        </div>
-    </section>
-
-    <section class="categories">
-        <h2 class="section-title">Nuestras Categorías</h2>
-        <div class="category-grid" id="category-grid">
-            <!-- Las categorías se cargarán aquí dinámicamente -->
+            <h2 class="section-title">Nuestras Categorías</h2>
+            <div class="category-grid" id="category-grid">
+                <!-- Las categorías se cargarán aquí dinámicamente -->
+            </div>
         </div>
     </section>
 
@@ -57,10 +51,7 @@
     <!-- Modal para detalles del producto -->
     <div class="modal" id="productModal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 id="productModalLabel"></h5>
-                <button class="modal-close" id="modalClose">×</button>
-            </div>
+            <button class="modal-close" id="modalClose">×</button>
             <div class="modal-body">
                 <div class="carousel" id="productCarousel">
                     <div class="carousel-inner" id="carouselImages"></div>
@@ -68,10 +59,23 @@
                     <button class="carousel-control-next" id="carouselNext">›</button>
                 </div>
                 <div class="modal-details">
-                    <p><strong>Descripción:</strong> <span id="productDescription"></span></p>
-                    <p><strong>Precio:</strong> <span id="productPrice"></span></p>
-                    <a id="whatsappLink" href="#" target="_blank" class="btn">Consultar por WhatsApp</a>
+                    <h5 id="productModalLabel"></h5>
+                    <p class="modal-description"><strong>Descripción:</strong> <span id="productDescription"></span></p>
+                    <p class="modal-price"><strong>Precio:</strong> <span id="productPrice"></span></p>
+                    <a id="whatsappLink" href="#" target="_blank" class="modal-btn">Consultar por WhatsApp</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para favoritos -->
+    <div class="modal" id="favoritesModal">
+        <div class="modal-content favorites-modal-content">
+            <button class="modal-close" id="favoritesModalClose">×</button>
+            <div class="modal-body">
+                <h5>Mis Favoritos</h5>
+                <div id="favoritesList" class="favorites-list"></div>
+                <a id="whatsappFavoritesLink" href="#" target="_blank" class="modal-btn">Contactar por WhatsApp</a>
             </div>
         </div>
     </div>
