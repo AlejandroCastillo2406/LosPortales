@@ -90,6 +90,7 @@ header {
 .hero-content {
     max-width: 1400px;
     padding: 0 20px;
+    width: 100%;
 }
 
 .section-title {
@@ -112,14 +113,33 @@ header {
 }
 
 .category-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
     gap: 20px;
+    padding-bottom: 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.category-grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.category-grid::-webkit-scrollbar-thumb {
+    background: #e9c46a;
+    border-radius: 10px;
+}
+
+.category-grid::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .category-item {
     position: relative;
-    height: 300px;
+    flex: 0 0 auto;
+    width: 250px;
+    height: 350px;
     overflow: hidden;
     border-radius: 10px;
     cursor: pointer;
@@ -589,8 +609,9 @@ footer {
         height: 300px;
     }
 
-    .category-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    .category-item {
+        width: 200px;
+        height: 280px;
     }
 
     .nav-menu {
