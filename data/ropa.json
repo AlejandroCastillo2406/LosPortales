@@ -1,66 +1,51 @@
 [
-    {
-        "id": 1,
-        "nombre": "Tops Básicos",
-        "descripcion": "Tops versátiles para cualquier ocasión.",
-        "precio": "$10",
-        "imagenes": ["images/tops.jpeg"],
-        "categoria": "Ropa"
-    },
-    {
-        "id": 2,
-        "nombre": "Blusa para Gimnasio",
-        "descripcion": "Blusa cómoda y transpirable para entrenar.",
-        "precio": "$15",
-        "imagenes": ["images/blusagym.jpeg"],
-        "categoria": "Ropa"
-    },
-    {
-        "id": 3,
-        "nombre": "Combo de 3 Tops",
-        "descripcion": "Pack de 3 tops a un precio especial.",
-        "precio": "$25",
-        "imagenes": ["images/combo3tops.jpeg"],
-        "categoria": "Ropa"
-    },
-    {
-        "id": 4,
-        "nombre": "Conjunto Completo",
-        "descripcion": "Conjunto de top y pantalón a juego.",
-        "precio": "$30",
-        "imagenes": ["images/conjunto.jpeg"],
-        "categoria": "Ropa"
-    },
-    {
-        "id": 5,
-        "nombre": "Falda Casual",
-        "descripcion": "Falda ligera y moderna para el día a día.",
-        "precio": "$20",
-        "imagenes": ["images/falda.jpeg"],
-        "categoria": "Ropa"
-    },
-    {
-        "id": 6,
-        "nombre": "Pestañas",
-        "descripcion": "Accesorio único para complementar tu look.",
-        "precio": "$5",
-        "imagenes": ["images/pestaña.jpeg", "images/pestaña2.jpeg"],
-        "categoria": "Accesorios"
-    },
-    {
-        "id": 7,
-        "nombre": "Top Elegante",
-        "descripcion": "Top ideal para salidas nocturnas.",
-        "precio": "$12",
-        "imagenes": ["images/top.jpeg"],
-        "categoria": "Ropa"
-    },
-    {
-        "id": 8,
-        "nombre": "Top Deportivo",
-        "descripcion": "Top cómodo para actividades deportivas.",
-        "precio": "$15",
-        "imagenes": ["images/top3.jpeg"],
-        "categoria": "Ropa"
-    }
+    {"id": 1, "nombre": "Top Básico", 
+    "descripcion": "Top versátil para cualquier ocasión.", 
+    "precio": "$10", "imagenes": ["images/tops.jpeg"], 
+    "categoria": "top", "sexo": "mujer"},
+
+    {"id": 2, "nombre": "Blusa para Gimnasio", 
+    "descripcion": "Blusa cómoda y transpirable para entrenar.", 
+    "precio": "$15", "imagenes": ["images/blusagym.jpeg"], 
+    "categoria": "blusa", "sexo": "mujer"},
+
+    {"id": 3, "nombre": "Combo de 3 Tops", 
+    "descripcion": "Pack de 3 tops a un precio especial.", 
+    "precio": "$25", "imagenes": ["images/combo3tops.jpeg"], 
+    "categoria": "top", "sexo": "mujer"},
+
+    {"id": 4, "nombre": "Falda Casual", 
+    "descripcion": "Falda ligera y moderna para el día a día.", 
+    "precio": "$20", "imagenes": ["images/falda.jpeg"], 
+    "categoria": "falda", "sexo": "mujer"},
+
+    {"id": 5, "nombre": "Short Deportivo", 
+    "descripcion": "Short cómodo para actividades deportivas.", 
+    "precio": "$18", "imagenes": ["images/top3.jpeg"], 
+    "categoria": "short", "sexo": "mujer"},
+
+    {"id": 6, "nombre": "Camisa Elegante", 
+    "descripcion": "Camisa ideal para salidas nocturnas.", 
+    "precio": "$12", "imagenes": ["images/top.jpeg"], 
+    "categoria": "camisa", "sexo": "hombre"},
+
+    {"id": 7, "nombre": "Short Casual", 
+    "descripcion": "Short ligero para el día a día.", 
+    "precio": "$20", "imagenes": ["images/conjunto.jpeg"], 
+    "categoria": "short", "sexo": "hombre"},
+
+    {"id": 8, "nombre": "Sudadera Unisex", 
+    "descripcion": "Sudadera cómoda para cualquier ocasión.", 
+    "precio": "$30", "imagenes": ["images/combo3tops.jpeg"], 
+    "categoria": "sudadera", "sexo": "unisex"},
+
+    {"id": 9, "nombre": "Pantalón Unisex", 
+    "descripcion": "Pantalón versátil y moderno.", 
+    "precio": "$35", "imagenes": ["images/top3.jpeg"], 
+    "categoria": "pantalon", "sexo": "unisex"},
+
+    {"id": 10, "nombre": "Pestañas", 
+    "descripcion": "Accesorio único para complementar tu look.", 
+    "precio": "$5", "imagenes": ["images/pestaña.jpeg", "images/pestaña2.jpeg"], 
+    "categoria": "accesorio", "sexo": "unisex"}
 ]
