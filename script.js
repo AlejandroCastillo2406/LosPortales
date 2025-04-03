@@ -18,17 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
             { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
             { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
             { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
-        ],
-        defecto: [
-            { nombre: 'Top', imagen: 'images/mujer-top.jpg', categoria: 'top' },
-            { nombre: 'Blusa', imagen: 'images/mujer-blusa.jpg', categoria: 'blusa' },
-            { nombre: 'Falda', imagen: 'images/mujer-falda.jpg', categoria: 'falda' },
-            { nombre: 'Short', imagen: 'images/mujer-short.jpg', categoria: 'short' },
-            { nombre: 'Camisa', imagen: 'images/hombre-camisa.jpg', categoria: 'camisa' },
-            { nombre: 'Short', imagen: 'images/hombre-short.jpg', categoria: 'short' },
-            { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
-            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
-            { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
         ]
     };
 
@@ -44,10 +33,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 <img src="${cat.imagen}" alt="Categoría ${cat.nombre}">
                 <div class="category-info">
                     <h3>${cat.nombre}</h3>
-                    <p>Explora nuestra selección de ${cat.nombre.toLowerCase()}</p>
-                    <a href="#">Explorar →</a>
                 </div>
             `;
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const filtered = productos.filter(p => p.categoria === cat.categoria);
+                mostrarProductos(filtered);
+            });
             categoryGrid.appendChild(item);
         });
     }
@@ -101,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('productDescription').textContent = producto.descripcion;
                 document.getElementById('productPrice').textContent = producto.precio;
 
-                // Configurar enlace de WhatsApp
                 const whatsappLink = document.getElementById('whatsappLink');
                 const mensaje = `Hola, estoy interesado/a en la prenda "${producto.nombre}" que cuesta ${producto.precio}. ¿Tienes más información?`;
                 whatsappLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
@@ -153,6 +144,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Función para mostrar favoritos
+    function mostrarFavoritos() {
+        const favoritesList = document.getElementById('favoritesList');
+        favoritesList.innerHTML = '';
+        const favoritosProductos = productos.filter(p => favorites.includes(p.id));
+        if (favoritosProductos.length === 0) {
+            favoritesList.innerHTML = '<p>No tienes productos favoritos.</p>';
+        } else {
+            favoritosProductos.forEach(producto => {
+                const item = document.createElement('div');
+                item.className = 'favorite-item';
+                item.innerHTML = `
+                    <img src="${producto.imagenes[0]}" alt="${producto.nombre}">
+                    <h3>${producto.nombre}</h3>
+                `;
+                favoritesList.appendChild(item);
+            });
+
+            const whatsappFavoritesLink = document.getElementById('whatsappFavoritesLink');
+            const nombresFavoritos = favoritosProductos.map(p => `${p.nombre} (${p.precio})`).join(', ');
+            const mensaje = `Hola, estoy interesado/a en estas prendas favoritas: ${nombresFavoritos}. ¿Tienes más información?`;
+            whatsappFavoritesLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
+        }
+        document.getElementById('favoritesModal').style.display = 'flex';
+    }
+
     // Cargar productos desde ropa.json
     fetch('data/ropa.json')
         .then(response => response.json())
@@ -165,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('filter-all').addEventListener('click', (e) => {
                 e.preventDefault();
                 mostrarProductos(productos);
-                mostrarCategorias('defecto'); // Puedes cambiar esto si quieres mostrar otras categorías por defecto
+                mostrarCategorias('mujer');
             });
 
             document.getElementById('filter-mujer').addEventListener('click', (e) => {
@@ -188,20 +205,38 @@ document.addEventListener('DOMContentLoaded', function() {
                 mostrarProductos(filtered);
                 mostrarCategorias('unisex');
             });
+
+            // Mostrar modal de favoritos
+            document.getElementById('favorites-icon').addEventListener('click', (e) => {
+                e.preventDefault();
+                mostrarFavoritos();
+            });
         })
         .catch(error => console.error('Error al cargar el JSON:', error));
 
-    // Cerrar modal
-    const modal = document.getElementById('productModal');
-    const modalClose = document.getElementById('modalClose');
+    // Cerrar modales
+    const productModal = document.getElementById('productModal');
+    const favoritesModal = document.getElementById('favoritesModal');
+    const productModalClose = document.getElementById('modalClose');
+    const favoritesModalClose = document.getElementById('favoritesModalClose');
 
-    modalClose.addEventListener('click', () => {
-        modal.style.display = 'none';
+    productModalClose.addEventListener('click', () => {
+        productModal.style.display = 'none';
     });
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
+    favoritesModalClose.addEventListener('click', () => {
+        favoritesModal.style.display = 'none';
+    });
+
+    productModal.addEventListener('click', (e) => {
+        if (e.target === productModal) {
+            productModal.style.display = 'none';
+        }
+    });
+
+    favoritesModal.addEventListener('click', (e) => {
+        if (e.target === favoritesModal) {
+            favoritesModal.style.display = 'none';
         }
     });
 });
