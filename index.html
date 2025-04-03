@@ -26,9 +26,6 @@
                 <div class="icon" id="favorites-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 </div>
-                <div class="icon" id="cart-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                </div>
             </div>
         </div>
     </header>
@@ -43,31 +40,8 @@
 
     <section class="categories">
         <h2 class="section-title">Nuestras Categorías</h2>
-        <div class="category-grid">
-            <div class="category-item">
-                <img src="/api/placeholder/600/800" alt="Categoría Mujer">
-                <div class="category-info">
-                    <h3>Mujer</h3>
-                    <p>Elegancia y sofisticación en cada pieza</p>
-                    <a href="#">Explorar →</a>
-                </div>
-            </div>
-            <div class="category-item">
-                <img src="/api/placeholder/600/800" alt="Categoría Hombre">
-                <div class="category-info">
-                    <h3>Hombre</h3>
-                    <p>Estilo contemporáneo con calidad excepcional</p>
-                    <a href="#">Explorar →</a>
-                </div>
-            </div>
-            <div class="category-item">
-                <img src="/api/placeholder/600/800" alt="Categoría Unisex">
-                <div class="category-info">
-                    <h3>Unisex</h3>
-                    <p>El complemento perfecto para cada ocasión</p>
-                    <a href="#">Explorar →</a>
-                </div>
-            </div>
+        <div class="category-grid" id="category-grid">
+            <!-- Las categorías se cargarán aquí dinámicamente -->
         </div>
     </section>
 
@@ -96,6 +70,7 @@
                 <div class="modal-details">
                     <p><strong>Descripción:</strong> <span id="productDescription"></span></p>
                     <p><strong>Precio:</strong> <span id="productPrice"></span></p>
+                    <a id="whatsappLink" href="#" target="_blank" class="btn">Consultar por WhatsApp</a>
                 </div>
             </div>
         </div>
