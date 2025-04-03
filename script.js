@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         unisex: [
             { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
-            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
+            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpeg', categoria: 'pantalon' },
             { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
         ]
     };
