@@ -308,28 +308,11 @@ header {
     justify-content: space-between;
 }
 
-.add-to-cart {
-    background-color: #232323;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-    flex: 1;
-}
-
-.add-to-cart:hover {
-    background-color: #e9c46a;
-    color: #232323;
-}
-
 .view-details {
     background-color: transparent;
     color: #232323;
     border: 1px solid #232323;
     padding: 10px 15px;
-    margin-left: 10px;
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s ease;
