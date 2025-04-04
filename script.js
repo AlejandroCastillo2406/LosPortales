@@ -88,20 +88,29 @@ document.addEventListener('DOMContentLoaded', function() {
                 const id = favoriteBtn.getAttribute('data-id');
                 const producto = productos.find(p => p.id == id);
 
+                // Configurar el contenido del modal
                 document.getElementById('productModalLabel').textContent = producto.nombre;
                 document.getElementById('productDescription').textContent = producto.descripcion;
                 document.getElementById('productPrice').textContent = producto.precio;
 
+                // Configurar enlace de WhatsApp
                 const whatsappLink = document.getElementById('whatsappLink');
                 const mensaje = `Hola, estoy interesado/a en la prenda "${producto.nombre}" que cuesta ${producto.precio}. ¿Tienes más información?`;
                 whatsappLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
 
+                // Configurar enlace de Facebook
+                const facebookShare = document.getElementById('facebookShare');
+                const urlToShare = window.location.href; // URL de la página actual
+                const shareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive!`;
+                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}&quote=${encodeURIComponent(shareText)}`;
+
+                // Configurar el carrusel
                 const carouselImages = document.getElementById('carouselImages');
                 carouselImages.innerHTML = '';
                 producto.imagenes.forEach((img, index) => {
                     const div = document.createElement('div');
                     div.className = 'carousel-item';
-                    div.innerHTML = `<img src="${img}" alt="${producto.nombre}">`;
+                    div.innerHTML = `<img src="${img}" alt="${producto.nombre}" loading="lazy">`;
                     carouselImages.appendChild(div);
                 });
 
@@ -123,6 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
 
+                // Forzar la carga de imágenes
+                items.forEach(item => {
+                    const img = item.querySelector('img');
+                    img.addEventListener('error', () => {
+                        console.error(`Error al cargar la imagen: ${img.src}`);
+                        img.src = 'images/placeholder.jpg'; // Imagen de respaldo
+                    });
+                });
+
                 prevButton.onclick = () => {
                     if (currentIndex > 0) {
                         currentIndex--;
@@ -137,7 +155,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 };
 
+                // Mostrar el modal
                 document.getElementById('productModal').style.display = 'flex';
+                updateCarousel(); // Asegurar que el carrusel se inicialice correctamente
             });
         });
     }
@@ -180,7 +200,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cargar productos desde ropa.json
     fetch('data/ropa.json')
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al cargar el JSON: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
             productos = data;
             productosFiltrados = [...productos];
