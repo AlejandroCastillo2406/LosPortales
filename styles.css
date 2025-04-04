@@ -192,7 +192,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 15px; /* Reducido de 30px a 15px */
     padding: 0 20px;
     gap: 20px;
 }
@@ -451,29 +451,28 @@ footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 1000;
     align-items: center;
     justify-content: center;
 }
 
 .modal-content {
-    background: #fff;
-    max-width: 900px;
+    background: #1a1a1a;
+    max-width: 1000px;
     width: 90%;
     border-radius: 15px;
     overflow: hidden;
     position: relative;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     display: flex;
-    padding: 30px;
-    background: linear-gradient(135deg, #f8f5f2 0%, #fff 100%);
+    padding: 0;
 }
 
 .modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 20px;
+    right: 20px;
     background: #e63946;
     color: #fff;
     border: none;
@@ -486,24 +485,32 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .modal-close:hover {
-    background: #232323;
+    background: #fff;
+    color: #232323;
 }
 
 .modal-body {
     display: flex;
     width: 100%;
-    gap: 30px;
+    height: 600px;
+}
+
+.modal-image {
+    flex: 1;
+    background: #232323;
+    position: relative;
 }
 
 .carousel {
-    position: relative;
-    flex: 1;
-    background: #f8f5f2;
-    border-radius: 10px;
-    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .carousel-inner {
@@ -520,9 +527,8 @@ footer {
 
 .carousel-item img {
     width: 100%;
-    height: 450px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
     display: block;
 }
 
@@ -530,7 +536,7 @@ footer {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(255, 255, 255, 0.2);
     border: none;
     color: #fff;
     font-size: 2rem;
@@ -545,58 +551,76 @@ footer {
 }
 
 .carousel-control-prev {
-    left: 10px;
+    left: 20px;
 }
 
 .carousel-control-next {
-    right: 10px;
+    right: 20px;
 }
 
 .modal-details {
     flex: 1;
-    padding: 20px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    color: #fff;
 }
 
 .modal-details h5 {
-    font-size: 2.2rem;
-    color: #232323;
+    font-size: 2.5rem;
     margin-bottom: 20px;
     font-weight: 700;
+    color: #e9c46a;
 }
 
 .modal-details .description {
     font-size: 1.2rem;
-    color: #666;
-    margin-bottom: 15px;
+    color: #ccc;
+    margin-bottom: 20px;
     line-height: 1.6;
 }
 
 .modal-details .price {
-    font-size: 1.8rem;
-    color: #e63946;
+    font-size: 2rem;
+    color: #fff;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
-.modal-details .btn {
-    background-color: #25D366;
-    color: #fff;
-    padding: 15px 30px;
+.modal-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 25px;
     border-radius: 5px;
-    text-align: center;
     font-size: 1.1rem;
     font-weight: 600;
+    text-decoration: none;
     transition: background-color 0.3s ease;
 }
 
-.modal-details .btn:hover {
+.btn-whatsapp {
+    background-color: #25D366;
+    color: #fff;
+}
+
+.btn-whatsapp:hover {
     background-color: #1ebe52;
+}
+
+.btn-facebook {
+    background-color: #4267B2;
+    color: #fff;
+}
+
+.btn-facebook:hover {
+    background-color: #365899;
 }
 
 /* Modal (Favoritos) */
@@ -604,12 +628,14 @@ footer {
     max-width: 600px;
     padding: 30px;
     text-align: center;
+    background: #1a1a1a;
+    color: #fff;
 }
 
 .favorites-modal-content h2 {
     font-size: 2rem;
     margin-bottom: 20px;
-    color: #232323;
+    color: #e9c46a;
 }
 
 .favorites-list {
@@ -622,7 +648,7 @@ footer {
     display: flex;
     align-items: center;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #333;
 }
 
 .favorite-item img {
@@ -635,17 +661,40 @@ footer {
 
 .favorite-item h3 {
     font-size: 1.2rem;
-    color: #232323;
+    color: #fff;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .modal-body {
         flex-direction: column;
+        height: auto;
     }
 
-    .carousel-item img {
-        height: 300px;
+    .modal-image {
+        height: 400px;
+    }
+
+    .modal-details {
+        padding: 20px;
+    }
+
+    .modal-details h5 {
+        font-size: 1.8rem;
+    }
+
+    .modal-details .price {
+        font-size: 1.5rem;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
     }
 
     .category-item {
