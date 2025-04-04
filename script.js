@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     let productos = [];
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    let productosFiltrados = [];
 
     // Definir las categorías por sexo con imágenes
     const categoriasPorSexo = {
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         ],
         unisex: [
             { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
-            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpeg', categoria: 'pantalon' },
+            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
             { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
         ]
     };
@@ -37,18 +38,18 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             item.addEventListener('click', (e) => {
                 e.preventDefault();
-                const filtered = productos.filter(p => p.categoria === cat.categoria);
-                mostrarProductos(filtered);
+                productosFiltrados = productos.filter(p => p.categoria === cat.categoria);
+                mostrarProductos(productosFiltrados);
             });
             categoryGrid.appendChild(item);
         });
     }
 
     // Función para mostrar productos
-    function mostrarProductos(productosFiltrados) {
+    function mostrarProductos(productosAMostrar) {
         const productsGrid = document.getElementById('products-grid');
         productsGrid.innerHTML = '';
-        productosFiltrados.forEach(producto => {
+        productosAMostrar.forEach(producto => {
             const card = document.createElement('div');
             card.className = 'product-card';
             const isFavorite = favorites.includes(producto.id);
@@ -63,16 +64,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="product-info">
                     <h3>${producto.nombre}</h3>
-                    <div class="product-actions">
-                        <button class="view-details" data-id="${producto.id}">Detalles</button>
-                    </div>
                 </div>
             `;
             productsGrid.appendChild(card);
 
             // Añadir evento al botón de favoritos
             const favoriteBtn = card.querySelector('.favorite-btn');
-            favoriteBtn.addEventListener('click', () => {
+            favoriteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Evitar que el clic en el botón de favoritos abra el modal
                 const id = parseInt(favoriteBtn.getAttribute('data-id'));
                 if (favorites.includes(id)) {
                     favorites = favorites.filter(favId => favId !== id);
@@ -84,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('favorites', JSON.stringify(favorites));
             });
 
-            // Añadir evento al botón "Detalles"
-            card.querySelector('.view-details').addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
+            // Añadir evento a toda la tarjeta para abrir el modal
+            card.addEventListener('click', function() {
+                const id = favoriteBtn.getAttribute('data-id');
                 const producto = productos.find(p => p.id == id);
 
                 document.getElementById('productModalLabel').textContent = producto.nombre;
@@ -102,7 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 producto.imagenes.forEach((img, index) => {
                     const div = document.createElement('div');
                     div.className = 'carousel-item';
-                    div.style.transform = `translateX(${index * 100}%)`;
                     div.innerHTML = `<img src="${img}" alt="${producto.nombre}">`;
                     carouselImages.appendChild(div);
                 });
@@ -170,39 +168,51 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('favoritesModal').style.display = 'flex';
     }
 
+    // Función para ordenar productos
+    function ordenarProductos(productos, criterio) {
+        if (criterio === 'price-asc') {
+            return [...productos].sort((a, b) => parseFloat(a.precio.replace('$', '')) - parseFloat(b.precio.replace('$', '')));
+        } else if (criterio === 'price-desc') {
+            return [...productos].sort((a, b) => parseFloat(b.precio.replace('$', '')) - parseFloat(a.precio.replace('$', '')));
+        }
+        return productos;
+    }
+
     // Cargar productos desde ropa.json
     fetch('data/ropa.json')
         .then(response => response.json())
         .then(data => {
             productos = data;
-            mostrarProductos(productos); // Mostrar todos por defecto
-            mostrarCategorias('mujer'); // Mostrar categorías de mujer por defecto
+            productosFiltrados = [...productos];
+            mostrarProductos(productosFiltrados);
+            mostrarCategorias('mujer');
 
             // Filtrar por sexo
             document.getElementById('filter-all').addEventListener('click', (e) => {
                 e.preventDefault();
-                mostrarProductos(productos);
+                productosFiltrados = [...productos];
+                mostrarProductos(productosFiltrados);
                 mostrarCategorias('mujer');
             });
 
             document.getElementById('filter-mujer').addEventListener('click', (e) => {
                 e.preventDefault();
-                const filtered = productos.filter(p => p.sexo === 'mujer');
-                mostrarProductos(filtered);
+                productosFiltrados = productos.filter(p => p.sexo === 'mujer');
+                mostrarProductos(productosFiltrados);
                 mostrarCategorias('mujer');
             });
 
             document.getElementById('filter-hombre').addEventListener('click', (e) => {
                 e.preventDefault();
-                const filtered = productos.filter(p => p.sexo === 'hombre');
-                mostrarProductos(filtered);
+                productosFiltrados = productos.filter(p => p.sexo === 'hombre');
+                mostrarProductos(productosFiltrados);
                 mostrarCategorias('hombre');
             });
 
             document.getElementById('filter-unisex').addEventListener('click', (e) => {
                 e.preventDefault();
-                const filtered = productos.filter(p => p.sexo === 'unisex');
-                mostrarProductos(filtered);
+                productosFiltrados = productos.filter(p => p.sexo === 'unisex');
+                mostrarProductos(productosFiltrados);
                 mostrarCategorias('unisex');
             });
 
@@ -210,6 +220,22 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('favorites-icon').addEventListener('click', (e) => {
                 e.preventDefault();
                 mostrarFavoritos();
+            });
+
+            // Búsqueda
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filtered = productosFiltrados.filter(p => p.nombre.toLowerCase().includes(searchTerm));
+                mostrarProductos(filtered);
+            });
+
+            // Ordenamiento
+            const sortSelect = document.getElementById('sortSelect');
+            sortSelect.addEventListener('change', () => {
+                const criterio = sortSelect.value;
+                const productosOrdenados = ordenarProductos(productosFiltrados, criterio);
+                mostrarProductos(productosOrdenados);
             });
         })
         .catch(error => console.error('Error al cargar el JSON:', error));
