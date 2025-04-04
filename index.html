@@ -15,6 +15,7 @@
                 <li><a href="#" id="filter-mujer">Mujer</a></li>
                 <li><a href="#" id="filter-hombre">Hombre</a></li>
                 <li><a href="#" id="filter-unisex">Unisex</a></li>
+                <li><a href="#">Accesorios</a></li>
                 <li><a href="#">Sobre Nosotros</a></li>
                 <li><a href="#">Contacto</a></li>
             </ul>
@@ -40,6 +41,14 @@
 
     <section class="products">
         <div class="products-container">
+            <div class="filter-bar">
+                <input type="text" id="searchInput" placeholder="Buscar ropa...">
+                <select id="sortSelect">
+                    <option value="default">Ordenar por...</option>
+                    <option value="price-asc">Precio: Menor a Mayor</option>
+                    <option value="price-desc">Precio: Mayor a Menor</option>
+                </select>
+            </div>
             <h2 class="section-title">Nuestra Ropa</h2>
             <div class="products-grid" id="products-grid">
                 <!-- Los productos se cargarán aquí -->
