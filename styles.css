@@ -79,7 +79,7 @@ header {
 
 /* Hero section */
 .hero {
-    height: 80vh;
+    height: 50vh;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1400/800') center/cover no-repeat;
     display: flex;
     align-items: center;
