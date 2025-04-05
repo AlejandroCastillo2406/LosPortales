@@ -14,7 +14,7 @@ body {
 /* Header y navegación */
 header {
     background-color: #232323;
-    padding: 15px 0;
+    padding: 20px 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -45,7 +45,7 @@ header {
     color: #e9c46a;
     font-size: 2rem;
     font-weight: 700;
-    letter-spacing: 0px;
+    letter-spacing: 2px;
     text-decoration: none;
 }
 
@@ -125,7 +125,7 @@ header {
 
 .category-grid {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: nowrap; /* Prevent wrapping on all devices */
     overflow-x: auto;
     gap: 20px;
     padding-bottom: 10px;
@@ -238,7 +238,7 @@ header {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Maintain desktop grid layout */
     gap: 40px;
     padding: 0 20px;
 }
@@ -327,7 +327,7 @@ footer {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Maintain desktop grid layout */
     gap: 40px;
     padding: 0 20px;
 }
@@ -433,7 +433,7 @@ footer {
 
 .modal-logo {
     text-align: center;
-    margin-top: -100px;
+    margin-top:-100px;
     margin-bottom: 15px;
 }
 
@@ -634,65 +634,4 @@ footer {
 .favorite-item h3 {
     font-size: 1.2rem;
     color: #fff;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .modal-body {
-        flex-direction: column;
-        height: auto;
-    }
-
-    .modal-image {
-        height: 400px;
-    }
-
-    .modal-details {
-        padding: 20px;
-    }
-
-    .modal-details h5 {
-        font-size: 1.8rem;
-    }
-
-    .modal-details .price {
-        font-size: 1.5rem;
-    }
-
-    .modal-actions {
-        flex-direction: row;
-        gap: 15px;
-    }
-
-    .category-item {
-        width: 200px;
-        height: 280px;
-    }
-
-    .nav-menu {
-        display: none;
-    }
-
-    .filter-bar {
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .whatsapp-share-icon .action-icon,
-    .facebook-share-icon .action-icon {
-        width: 100px;
-        height: 32px;
-    }
-
-    #searchInput, #sortSelect {
-        width: 100%;
-    }
-
-    .logo-img {
-        width: 40px;
-    }
-
-    .modal-logo .logo-img {
-        width: 50px;
-    }
 }
