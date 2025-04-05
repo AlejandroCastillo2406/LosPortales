@@ -36,7 +36,7 @@ header {
 }
 
 .logo-img {
-    width: 50px; /* Ajusta el tamaño según el logo */
+    width: 50px;
     height: auto;
     margin-right: 10px;
 }
@@ -251,7 +251,7 @@ header {
     border-radius: 10px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    border: 2px solid #232323; /* Contorno negro */
+    border: 2px solid #232323;
 }
 
 .product-card:hover {
@@ -478,16 +478,16 @@ footer {
     position: relative;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     display: flex;
-    border: 3px solid #e9c46a; /* Contorno dorado */
+    border: 3px solid #e9c46a;
 }
 
 .modal-logo {
     text-align: center;
-    margin-bottom: 15px; /* Espacio entre el logo y el título */
+    margin-bottom: 15px;
 }
 
 .modal-logo .logo-img {
-    width: 80px; /* Tamaño ajustado para que sea visible encima del título */
+    width: 80px;
     height: auto;
 }
 
@@ -528,32 +528,31 @@ footer {
 }
 
 .carousel {
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .carousel-inner {
     display: flex;
-    overflow: hidden;
     width: 100%;
     height: 100%;
+    position: relative;
 }
 
 .carousel-item {
     flex: 0 0 100%;
-    transition: transform 0.5s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #232323;
+    height: 100%;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .carousel-item img {
-    max-width: 100%;
-    max-height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: contain;
     display: block;
 }
@@ -561,7 +560,7 @@ footer {
 .carousel-control-prev, .carousel-control-next {
     position: absolute;
     top: 50%;
-    transform: translateY(0%);
+    transform: translateY(-50%);
     background: #232323;
     border: none;
     color: #fff;
@@ -617,6 +616,7 @@ footer {
 .modal-actions {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -656,18 +656,7 @@ footer {
     text-align: center;
     background: #1a1a1a;
     color: #fff;
-    border: 3px solid #e9c46a; /* Contorno dorado */
-}
-
-.modal-logo {
-    text-align: center;
-    margin-top: -100px;
-    margin-bottom: 15px; /* Espacio entre el logo y el título o contenido */
-}
-
-.modal-logo .logo-img {
-    width: 124px; /* Tamaño ajustado para que sea visible */
-    height: auto;
+    border: 3px solid #e9c46a;
 }
 
 .favorites-modal-content h2 {
@@ -767,10 +756,10 @@ footer {
     }
 
     .logo-img {
-        width: 40px; /* Ajuste para pantallas pequeñas */
+        width: 40px;
     }
 
     .modal-logo .logo-img {
-        width: 50px; /* Ajuste para modales en pantallas pequeñas */
+        width: 50px;
     }
 }
