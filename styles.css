@@ -561,8 +561,8 @@ footer {
 .carousel-control-prev, .carousel-control-next {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(0%);
+    background: #232323;
     border: none;
     color: #fff;
     font-size: 2rem;
