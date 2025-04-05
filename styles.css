@@ -14,7 +14,7 @@ body {
 /* Header y navegación */
 header {
     background-color: #232323;
-    padding: 20px 0;
+    padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -433,11 +433,12 @@ footer {
 
 .modal-logo {
     text-align: center;
+    margin-top: -100px;
     margin-bottom: 15px;
 }
 
 .modal-logo .logo-img {
-    width: 80px;
+    width: 224px;
     height: auto;
 }
 
