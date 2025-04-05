@@ -125,7 +125,7 @@ header {
 
 .category-grid {
     display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping on all devices */
+    flex-wrap: nowrap;
     overflow-x: auto;
     gap: 20px;
     padding-bottom: 10px;
@@ -238,7 +238,7 @@ header {
 
 .products-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Maintain desktop grid layout */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 40px;
     padding: 0 20px;
 }
@@ -316,7 +316,7 @@ header {
     text-align: center;
 }
 
-/* Footer (replacing newsletter position) */
+/* Footer */
 footer {
     background-color: #232323;
     color: #fff;
@@ -327,7 +327,7 @@ footer {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Maintain desktop grid layout */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
     padding: 0 20px;
 }
@@ -433,12 +433,11 @@ footer {
 
 .modal-logo {
     text-align: center;
-    margin-top:-100px;
     margin-bottom: 15px;
 }
 
 .modal-logo .logo-img {
-    width: 224px;
+    width: 80px;
     height: auto;
 }
 
@@ -634,4 +633,235 @@ footer {
 .favorite-item h3 {
     font-size: 1.2rem;
     color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    /* Header */
+    .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+    }
+
+    .logo-container {
+        margin-bottom: 10px;
+    }
+
+    .logo-img {
+        width: 40px;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .nav-menu {
+        display: flex !important; /* Force visibility */
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        background-color: #333; /* Add background for visibility */
+    }
+
+    .nav-menu li {
+        margin: 10px 0;
+    }
+
+    .nav-menu a {
+        font-size: 1rem;
+        padding: 10px 0;
+        display: block;
+        color: #fff; /* Ensure text is visible */
+    }
+
+    .icons {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .icon {
+        margin-left: 15px;
+        font-size: 1.5rem;
+    }
+
+    /* Hero Section */
+    .hero {
+        height: 50vh;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .category-grid {
+        gap: 15px;
+    }
+
+    .category-item {
+        width: 200px;
+        height: 280px;
+    }
+
+    .category-info h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Products Section */
+    .products {
+        padding: 40px 0; /* Reduce padding for mobile */
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    #searchInput, #sortSelect {
+        width: 100%;
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .product-image {
+        height: 250px;
+    }
+
+    .product-info h3 {
+        font-size: 1rem;
+    }
+
+    .favorite-btn {
+        width: 50px;
+        height: 50px;
+    }
+
+    .favorite-btn svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    /* Footer */
+    .footer-content {
+        grid-template-columns: 1fr; /* Stack columns vertically */
+        gap: 30px;
+    }
+
+    .footer-column {
+        text-align: center;
+    }
+
+    .footer-column h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .social-icons a {
+        width: 50px;
+        height: 50px;
+    }
+
+    .social-icons a svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* Modal (Producto) */
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .modal-body {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .modal-image {
+        height: 300px;
+        width: 100%;
+    }
+
+    .modal-details {
+        padding: 20px;
+    }
+
+    .modal-details h5 {
+        font-size: 1.8rem;
+    }
+
+    .modal-details .description {
+        font-size: 1rem;
+    }
+
+    .modal-details .price {
+        font-size: 1.5rem;
+    }
+
+    .modal-close {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+    }
+
+    .carousel-control-prev, .carousel-control-next {
+        font-size: 1.5rem;
+        padding: 8px 12px;
+    }
+
+    .modal-actions {
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .action-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .whatsapp-share-icon .action-icon,
+    .facebook-share-icon .action-icon {
+        width: 100px;
+        height: 32px;
+    }
+
+    .modal-logo .logo-img {
+        width: 60px;
+    }
+
+    /* Modal (Favoritos) */
+    .favorites-modal-content {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .favorites-modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .favorite-item img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .favorite-item h3 {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
 }
