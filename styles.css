@@ -661,6 +661,7 @@ footer {
 
 .modal-logo {
     text-align: center;
+    margin-top: 15px; /* Espacio entre el logo y el título o contenido */
     margin-bottom: 15px; /* Espacio entre el logo y el título o contenido */
 }
 
