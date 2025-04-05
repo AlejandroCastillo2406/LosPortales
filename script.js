@@ -1,174 +1,278 @@
-// script.js
-document.addEventListener('DOMContentLoaded', () => {
-    // Hamburger menu toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-
-    hamburger.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        const isExpanded = navMenu.classList.contains('active');
-        hamburger.setAttribute('aria-expanded', isExpanded);
-    });
-
-    // Fetch products from ropa.json
-    const productsGrid = document.getElementById('products-grid');
-    const searchInput = document.getElementById('searchInput');
-    const sortSelect = document.getElementById('sortSelect');
-    const filterAll = document.getElementById('filter-all');
-    const filterMujer = document.getElementById('filter-mujer');
-    const filterHombre = document.getElementById('filter-hombre');
-    const filterUnisex = document.getElementById('filter-unisex');
-    const productModal = document.getElementById('productModal');
-    const modalClose = document.getElementById('modalClose');
-    const favoritesModal = document.getElementById('favoritesModal');
-    const favoritesModalClose = document.getElementById('favoritesModalClose');
-    const favoritesIcon = document.getElementById('favorites-icon');
-    const favoritesList = document.getElementById('favoritesList');
-    const whatsappFavoritesLink = document.getElementById('whatsappFavoritesLink');
-    let products = [];
+document.addEventListener('DOMContentLoaded', function() {
+    let productos = [];
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    let productosFiltrados = [];
 
-    // Load products
+    // Definir las categorías por sexo con imágenes
+    const categoriasPorSexo = {
+        mujer: [
+            { nombre: 'Top', imagen: 'images/mujer-top.jpg', categoria: 'top' },
+            { nombre: 'Blusa', imagen: 'images/mujer-blusa.jpg', categoria: 'blusa' },
+            { nombre: 'Falda', imagen: 'images/mujer-falda.jpg', categoria: 'falda' },
+            { nombre: 'Short', imagen: 'images/mujer-short.jpg', categoria: 'short' }
+        ],
+        hombre: [
+            { nombre: 'Camisa', imagen: 'images/hombre-camisa.jpg', categoria: 'camisa' },
+            { nombre: 'Short', imagen: 'images/hombre-short.jpg', categoria: 'short' }
+        ],
+        unisex: [
+            { nombre: 'Sudadera', imagen: 'images/unisex-sudadera.jpg', categoria: 'sudadera' },
+            { nombre: 'Pantalón', imagen: 'images/unisex-pantalon.jpg', categoria: 'pantalon' },
+            { nombre: 'Accesorio', imagen: 'images/unisex-accesorio.jpg', categoria: 'accesorio' }
+        ]
+    };
+
+    // Función para mostrar categorías
+    function mostrarCategorias(sexo) {
+        const categoryGrid = document.getElementById('category-grid');
+        categoryGrid.innerHTML = '';
+        const categorias = categoriasPorSexo[sexo] || [];
+        categorias.forEach(cat => {
+            const item = document.createElement('div');
+            item.className = 'category-item';
+            item.innerHTML = `
+                <img src="${cat.imagen}" alt="Categoría ${cat.nombre}">
+                <div class="category-info">
+                    <h3>${cat.nombre}</h3>
+                </div>
+            `;
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                productosFiltrados = productos.filter(p => p.categoria === cat.categoria);
+                mostrarProductos(productosFiltrados);
+            });
+            categoryGrid.appendChild(item);
+        });
+    }
+
+    // Función para mostrar productos
+    function mostrarProductos(productosAMostrar) {
+        const productsGrid = document.getElementById('products-grid');
+        productsGrid.innerHTML = '';
+        productosAMostrar.forEach(producto => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            const isFavorite = favorites.includes(producto.id);
+            card.innerHTML = `
+                <div class="product-image">
+                    <img src="${producto.imagenes[0]}" alt="${producto.nombre}">
+                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" data-id="${producto.id}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="product-info">
+                    <h3>${producto.nombre}</h3>
+                </div>
+            `;
+            productsGrid.appendChild(card);
+
+            // Añadir evento al botón de favoritos
+            const favoriteBtn = card.querySelector('.favorite-btn');
+            favoriteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = parseInt(favoriteBtn.getAttribute('data-id'));
+                if (favorites.includes(id)) {
+                    favorites = favorites.filter(favId => favId !== id);
+                    favoriteBtn.classList.remove('active');
+                } else {
+                    favorites.push(id);
+                    favoriteBtn.classList.add('active');
+                }
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+            });
+
+            // Añadir evento a toda la tarjeta para abrir el modal
+            card.addEventListener('click', function() {
+                const id = favoriteBtn.getAttribute('data-id');
+                const producto = productos.find(p => p.id == id);
+
+                // Configurar el contenido del modal
+                document.getElementById('productModalLabel').textContent = producto.nombre;
+                document.getElementById('productDescription').textContent = producto.descripcion;
+                document.getElementById('productPrice').textContent = producto.precio;
+
+                // Configurar enlace de WhatsApp (Contactar)
+                const whatsappLink = document.getElementById('whatsappLink');
+                const mensaje = `Hola, estoy interesado/a en la prenda "${producto.nombre}" que cuesta ${producto.precio}. ¿Tienes más información?`;
+                whatsappLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
+
+                // Configurar enlace de WhatsApp (Compartir)
+                const whatsappShare = document.getElementById('whatsappShare');
+                const shareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive! ${window.location.href}`;
+                whatsappShare.href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+
+                // Configurar enlace de Facebook (Compartir)
+                const facebookShare = document.getElementById('facebookShare');
+                const urlToShare = window.location.href;
+                const fbShareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive!`;
+                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}"e=${encodeURIComponent(fbShareText)}`;
+
+                // Configurar el carrusel
+                const carouselImages = document.getElementById('carouselImages');
+                carouselImages.innerHTML = '';
+                producto.imagenes.forEach((img, index) => {
+                    const div = document.createElement('div');
+                    div.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+                    div.innerHTML = `<img src="${img}" alt="${producto.nombre}" loading="lazy">`;
+                    carouselImages.appendChild(div);
+                });
+
+                const prevButton = document.getElementById('carouselPrev');
+                const nextButton = document.getElementById('carouselNext');
+                const items = document.querySelectorAll('.carousel-item');
+                let currentIndex = 0;
+
+                if (producto.imagenes.length > 1) {
+                    prevButton.style.display = 'block';
+                    nextButton.style.display = 'block';
+                } else {
+                    prevButton.style.display = 'none';
+                    nextButton.style.display = 'none';
+                }
+
+                function updateCarousel() {
+                    items.forEach((item, idx) => {
+                        item.style.transform = `translateX(${(idx - currentIndex) * 100}%)`;
+                        item.style.opacity = idx === currentIndex ? '1' : '0';
+                    });
+                }
+
+                items.forEach(item => {
+                    const img = item.querySelector('img');
+                    img.addEventListener('error', () => {
+                        console.error(`Error al cargar la imagen: ${img.src}`);
+                        img.src = 'images/placeholder.jpg';
+                    });
+                });
+
+                prevButton.onclick = () => {
+                    if (currentIndex > 0) {
+                        currentIndex--;
+                        updateCarousel();
+                    }
+                };
+
+                nextButton.onclick = () => {
+                    if (currentIndex < producto.imagenes.length - 1) {
+                        currentIndex++;
+                        updateCarousel();
+                    }
+                };
+
+                document.getElementById('productModal').style.display = 'flex';
+                updateCarousel();
+            });
+        });
+    }
+
+    // Función para mostrar favoritos
+    function mostrarFavoritos() {
+        const favoritesList = document.getElementById('favoritesList');
+        favoritesList.innerHTML = '';
+        const favoritosProductos = productos.filter(p => favorites.includes(p.id));
+        if (favoritosProductos.length === 0) {
+            favoritesList.innerHTML = '<p>No tienes productos favoritos.</p>';
+        } else {
+            favoritosProductos.forEach(producto => {
+                const item = document.createElement('div');
+                item.className = 'favorite-item';
+                item.innerHTML = `
+                    <img src="${producto.imagenes[0]}" alt="${producto.nombre}">
+                    <h3>${producto.nombre}</h3>
+                `;
+                favoritesList.appendChild(item);
+            });
+
+            const whatsappFavoritesLink = document.getElementById('whatsappFavoritesLink');
+            const nombresFavoritos = favoritosProductos.map(p => `${p.nombre} (${p.precio})`).join(', ');
+            const mensaje = `Hola, estoy interesado/a en estas prendas favoritas: ${nombresFavoritos}. ¿Tienes más información?`;
+            whatsappFavoritesLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
+        }
+        document.getElementById('favoritesModal').style.display = 'flex';
+    }
+
+    // Función para ordenar productos
+    function ordenarProductos(productos, criterio) {
+        if (criterio === 'price-asc') {
+            return [...productos].sort((a, b) => parseFloat(a.precio.replace('$', '')) - parseFloat(b.precio.replace('$', '')));
+        } else if (criterio === 'price-desc') {
+            return [...productos].sort((a, b) => parseFloat(b.precio.replace('$', '')) - parseFloat(a.precio.replace('$', '')));
+        }
+        return productos;
+    }
+
+    // Cargar productos desde ropa.json
     fetch('data/ropa.json')
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to load products: ' + response.status);
+                throw new Error('Error al cargar el JSON: ' + response.statusText);
             }
             return response.json();
         })
         .then(data => {
-            products = data;
-            displayProducts(products);
-            loadFavorites();
+            productos = data;
+            productosFiltrados = [...productos];
+            mostrarProductos(productosFiltrados);
+            mostrarCategorias('mujer');
+
+            document.getElementById('filter-all').addEventListener('click', (e) => {
+                e.preventDefault();
+                productosFiltrados = [...productos];
+                mostrarProductos(productosFiltrados);
+                mostrarCategorias('mujer');
+            });
+
+            document.getElementById('filter-mujer').addEventListener('click', (e) => {
+                e.preventDefault();
+                productosFiltrados = productos.filter(p => p.sexo === 'mujer');
+                mostrarProductos(productosFiltrados);
+                mostrarCategorias('mujer');
+            });
+
+            document.getElementById('filter-hombre').addEventListener('click', (e) => {
+                e.preventDefault();
+                productosFiltrados = productos.filter(p => p.sexo === 'hombre');
+                mostrarProductos(productosFiltrados);
+                mostrarCategorias('hombre');
+            });
+
+            document.getElementById('filter-unisex').addEventListener('click', (e) => {
+                e.preventDefault();
+                productosFiltrados = productos.filter(p => p.sexo === 'unisex');
+                mostrarProductos(productosFiltrados);
+                mostrarCategorias('unisex');
+            });
+
+            document.getElementById('favorites-icon').addEventListener('click', (e) => {
+                e.preventDefault();
+                mostrarFavoritos();
+            });
+
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filtered = productosFiltrados.filter(p => p.nombre.toLowerCase().includes(searchTerm));
+                mostrarProductos(filtered);
+            });
+
+            const sortSelect = document.getElementById('sortSelect');
+            sortSelect.addEventListener('change', () => {
+                const criterio = sortSelect.value;
+                const productosOrdenados = ordenarProductos(productosFiltrados, criterio);
+                mostrarProductos(productosOrdenados);
+            });
         })
-        .catch(error => {
-            console.error('Error loading products:', error);
-            productsGrid.innerHTML = '<p>Error al cargar los productos. Por favor, intenta de nuevo más tarde.</p>';
-        });
+        .catch(error => console.error('Error al cargar el JSON:', error));
 
-    // Display products
-    function displayProducts(productsToDisplay) {
-        productsGrid.innerHTML = '';
-        productsToDisplay.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.classList.add('product-card');
-            productCard.innerHTML = `
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}">
-                    <div class="favorite-btn ${favorites.some(fav => fav.id === product.id) ? 'active' : ''}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="product-info">
-                    <h3>${product.name}</h3>
-                </div>
-            `;
+    // Cerrar modales
+    const productModal = document.getElementById('productModal');
+    const favoritesModal = document.getElementById('favoritesModal');
+    const productModalClose = document.getElementById('modalClose');
+    const favoritesModalClose = document.getElementById('favoritesModalClose');
 
-            // Add event listener for favorite button
-            const favoriteBtn = productCard.querySelector('.favorite-btn');
-            favoriteBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Prevent triggering the modal
-                toggleFavorite(product);
-                favoriteBtn.classList.toggle('active');
-            });
-
-            // Add event listener for product card click
-            productCard.addEventListener('click', () => openProductModal(product));
-            productsGrid.appendChild(productCard);
-        });
-    }
-
-    // Toggle favorite
-    function toggleFavorite(product) {
-        const index = favorites.findIndex(fav => fav.id === product.id);
-        if (index === -1) {
-            favorites.push(product);
-        } else {
-            favorites.splice(index, 1);
-        }
-        localStorage.setItem('favorites', JSON.stringify(favorites));
-        loadFavorites();
-    }
-
-    // Load favorites in modal
-    function loadFavorites() {
-        favoritesList.innerHTML = '';
-        if (favorites.length === 0) {
-            favoritesList.innerHTML = '<p>No tienes productos favoritos.</p>';
-            whatsappFavoritesLink.style.display = 'none';
-        } else {
-            favorites.forEach(fav => {
-                const favoriteItem = document.createElement('div');
-                favoriteItem.classList.add('favorite-item');
-                favoriteItem.innerHTML = `
-                    <img src="${fav.image}" alt="${fav.name}">
-                    <h3>${fav.name}</h3>
-                `;
-                favoritesList.appendChild(favoriteItem);
-            });
-            whatsappFavoritesLink.style.display = 'block';
-            const message = favorites.map(fav => `${fav.name} - ${fav.price}`).join('\n');
-            whatsappFavoritesLink.href = `https://wa.me/+527821152503?text=Hola, estoy interesado en los siguientes productos:\n${encodeURIComponent(message)}`;
-        }
-    }
-
-    // Open product modal
-    function openProductModal(product) {
-        document.getElementById('productModalLabel').textContent = product.name;
-        document.getElementById('productDescription').textContent = product.description || 'Sin descripción disponible.';
-        document.getElementById('productPrice').textContent = product.price;
-        const carouselImages = document.getElementById('carouselImages');
-        carouselImages.innerHTML = '';
-        product.images.forEach((img, index) => {
-            const carouselItem = document.createElement('div');
-            carouselItem.classList.add('carousel-item');
-            if (index === 0) carouselItem.classList.add('active');
-            carouselItem.innerHTML = `<img src="${img}" alt="${product.name} ${index + 1}">`;
-            carouselImages.appendChild(carouselItem);
-        });
-
-        // WhatsApp and Facebook share links
-        const whatsappLink = document.getElementById('whatsappLink');
-        const whatsappShare = document.getElementById('whatsappShare');
-        const facebookShare = document.getElementById('facebookShare');
-        whatsappLink.href = `https://wa.me/+527821152503?text=Hola, estoy interesado en ${encodeURIComponent(product.name)} - ${encodeURIComponent(product.price)}`;
-        whatsappShare.href = `https://wa.me/?text=${encodeURIComponent(`Mira este producto: ${product.name} - ${product.price} ${window.location.href}`)}`;
-        facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(`Mira este producto: ${product.name} - ${product.price}`)}`;
-
-        productModal.style.display = 'flex';
-        initializeCarousel();
-    }
-
-    // Initialize carousel
-    function initializeCarousel() {
-        const carouselItems = document.querySelectorAll('.carousel-item');
-        const prevBtn = document.getElementById('carouselPrev');
-        const nextBtn = document.getElementById('carouselNext');
-        let currentIndex = 0;
-
-        function showSlide(index) {
-            carouselItems.forEach((item, i) => {
-                item.style.transform = `translateX(${(i - index) * 100}%)`;
-            });
-        }
-
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex === 0) ? carouselItems.length - 1 : currentIndex - 1;
-            showSlide(currentIndex);
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex === carouselItems.length - 1) ? 0 : currentIndex + 1;
-            showSlide(currentIndex);
-        });
-
-        showSlide(currentIndex);
-    }
-
-    // Close modals
-    modalClose.addEventListener('click', () => {
+    productModalClose.addEventListener('click', () => {
         productModal.style.display = 'none';
     });
 
@@ -176,61 +280,13 @@ document.addEventListener('DOMContentLoaded', () => {
         favoritesModal.style.display = 'none';
     });
 
-    // Open favorites modal
-    favoritesIcon.addEventListener('click', () => {
-        favoritesModal.style.display = 'flex';
-    });
-
-    // Search functionality
-    searchInput.addEventListener('input', () => {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredProducts = products.filter(product =>
-            product.name.toLowerCase().includes(searchTerm)
-        );
-        displayProducts(filteredProducts);
-    });
-
-    // Sort functionality
-    sortSelect.addEventListener('change', () => {
-        const sortValue = sortSelect.value;
-        let sortedProducts = [...products];
-        if (sortValue === 'price-asc') {
-            sortedProducts.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-        } else if (sortValue === 'price-desc') {
-            sortedProducts.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
-        }
-        displayProducts(sortedProducts);
-    });
-
-    // Filter functionality
-    filterAll.addEventListener('click', (e) => {
-        e.preventDefault();
-        displayProducts(products);
-    });
-
-    filterMujer.addEventListener('click', (e) => {
-        e.preventDefault();
-        const filteredProducts = products.filter(product => product.category === 'Mujer');
-        displayProducts(filteredProducts);
-    });
-
-    filterHombre.addEventListener('click', (e) => {
-        e.preventDefault();
-        const filteredProducts = products.filter(product => product.category === 'Hombre');
-        displayProducts(filteredProducts);
-    });
-
-    filterUnisex.addEventListener('click', (e) => {
-        e.preventDefault();
-        const filteredProducts = products.filter(product => product.category === 'Unisex');
-        displayProducts(filteredProducts);
-    });
-
-    // Close modals when clicking outside
-    window.addEventListener('click', (e) => {
+    productModal.addEventListener('click', (e) => {
         if (e.target === productModal) {
             productModal.style.display = 'none';
         }
+    });
+
+    favoritesModal.addEventListener('click', (e) => {
         if (e.target === favoritesModal) {
             favoritesModal.style.display = 'none';
         }
