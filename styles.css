@@ -623,8 +623,6 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
     text-decoration: none;
     transition: transform 0.3s ease;
 }
@@ -633,16 +631,16 @@ footer {
     transform: scale(1.2);
 }
 
-.whatsapp-icon svg {
-    stroke: #25D366;
+.action-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 
-.share-icon svg {
-    stroke: #fff;
-}
-
-.share-icon:hover svg {
-    stroke: #e9c46a;
+.whatsapp-share-icon .action-icon,
+.facebook-share-icon .action-icon {
+    width: 120px;
+    height: 38px;
 }
 
 /* Modal (Favoritos) */
@@ -740,6 +738,12 @@ footer {
     .filter-bar {
         flex-direction: column;
         gap: 15px;
+    }
+
+    .whatsapp-share-icon .action-icon,
+    .facebook-share-icon .action-icon {
+        width: 100px;
+        height: 32px;
     }
 
     #searchInput, #sortSelect {
