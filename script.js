@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Añadir evento al botón de favoritos
             const favoriteBtn = card.querySelector('.favorite-btn');
             favoriteBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); // Evitar que el clic en el botón de favoritos abra el modal
+                e.stopPropagation();
                 const id = parseInt(favoriteBtn.getAttribute('data-id'));
                 if (favorites.includes(id)) {
                     favorites = favorites.filter(favId => favId !== id);
@@ -93,29 +93,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('productDescription').textContent = producto.descripcion;
                 document.getElementById('productPrice').textContent = producto.precio;
 
-                // Configurar enlace de WhatsApp
+                // Configurar enlace de WhatsApp (Contactar)
                 const whatsappLink = document.getElementById('whatsappLink');
                 const mensaje = `Hola, estoy interesado/a en la prenda "${producto.nombre}" que cuesta ${producto.precio}. ¿Tienes más información?`;
                 whatsappLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
 
-                // Configurar enlace de Facebook
+                // Configurar enlace de WhatsApp (Compartir)
+                const whatsappShare = document.getElementById('whatsappShare');
+                const shareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive! ${window.location.href}`;
+                whatsappShare.href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+
+                // Configurar enlace de Facebook (Compartir)
                 const facebookShare = document.getElementById('facebookShare');
-                const urlToShare = window.location.href; // URL de la página actual
-                const shareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive!`;
-                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}&quote=${encodeURIComponent(shareText)}`;
+                const urlToShare = window.location.href;
+                const fbShareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive!`;
+                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}&quote=${encodeURIComponent(fbShareText)}`;
 
                 // Configurar el carrusel
                 const carouselImages = document.getElementById('carouselImages');
                 carouselImages.innerHTML = '';
                 producto.imagenes.forEach((img, index) => {
                     const div = document.createElement('div');
-                    div.className = 'carousel-item';
+                    div.className = `carousel-item ${index === 0 ? 'active' : ''}`;
                     div.innerHTML = `<img src="${img}" alt="${producto.nombre}" loading="lazy">`;
                     carouselImages.appendChild(div);
                 });
 
                 const prevButton = document.getElementById('carouselPrev');
                 const nextButton = document.getElementById('carouselNext');
+                const items = document.querySelectorAll('.carousel-item');
+                let currentIndex = 0;
+
                 if (producto.imagenes.length > 1) {
                     prevButton.style.display = 'block';
                     nextButton.style.display = 'block';
@@ -124,20 +132,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     nextButton.style.display = 'none';
                 }
 
-                let currentIndex = 0;
-                const items = document.querySelectorAll('.carousel-item');
                 function updateCarousel() {
                     items.forEach((item, idx) => {
                         item.style.transform = `translateX(${(idx - currentIndex) * 100}%)`;
+                        item.style.opacity = idx === currentIndex ? '1' : '0';
                     });
                 }
 
-                // Forzar la carga de imágenes
                 items.forEach(item => {
                     const img = item.querySelector('img');
                     img.addEventListener('error', () => {
                         console.error(`Error al cargar la imagen: ${img.src}`);
-                        img.src = 'images/placeholder.jpg'; // Imagen de respaldo
+                        img.src = 'images/placeholder.jpg';
                     });
                 });
 
@@ -155,9 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 };
 
-                // Mostrar el modal
                 document.getElementById('productModal').style.display = 'flex';
-                updateCarousel(); // Asegurar que el carrusel se inicialice correctamente
+                updateCarousel();
             });
         });
     }
@@ -212,7 +217,6 @@ document.addEventListener('DOMContentLoaded', function() {
             mostrarProductos(productosFiltrados);
             mostrarCategorias('mujer');
 
-            // Filtrar por sexo
             document.getElementById('filter-all').addEventListener('click', (e) => {
                 e.preventDefault();
                 productosFiltrados = [...productos];
@@ -241,13 +245,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 mostrarCategorias('unisex');
             });
 
-            // Mostrar modal de favoritos
             document.getElementById('favorites-icon').addEventListener('click', (e) => {
                 e.preventDefault();
                 mostrarFavoritos();
             });
 
-            // Búsqueda
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', () => {
                 const searchTerm = searchInput.value.toLowerCase();
@@ -255,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 mostrarProductos(filtered);
             });
 
-            // Ordenamiento
             const sortSelect = document.getElementById('sortSelect');
             sortSelect.addEventListener('change', () => {
                 const criterio = sortSelect.value;
