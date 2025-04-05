@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const facebookShare = document.getElementById('facebookShare');
                 const urlToShare = window.location.href;
                 const fbShareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive!`;
-                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}&quote=${encodeURIComponent(fbShareText)}`;
+                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}"e=${encodeURIComponent(fbShareText)}`;
 
                 // Configurar el carrusel
                 const carouselImages = document.getElementById('carouselImages');
