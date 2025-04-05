@@ -316,68 +316,11 @@ header {
     text-align: center;
 }
 
-/* Newsletter */
-.newsletter {
+/* Footer (replacing newsletter position) */
+footer {
     background-color: #232323;
     color: #fff;
     padding: 80px 0;
-}
-
-.newsletter-container {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0 20px;
-}
-
-.newsletter h2 {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-}
-
-.newsletter p {
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    line-height: 1.6;
-    color: #ccc;
-}
-
-.newsletter-form {
-    display: flex;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.newsletter-form input {
-    flex: 1;
-    padding: 15px;
-    border: none;
-    font-size: 1rem;
-    border-radius: 5px 0 0 5px;
-}
-
-.newsletter-form button {
-    background-color: #e9c46a;
-    color: #232323;
-    padding: 0 30px;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    font-size: 1rem;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.newsletter-form button:hover {
-    background-color: #fff;
-}
-
-/* Footer */
-footer {
-    background-color: #f8f5f2;
-    padding: 60px 0 20px;
 }
 
 .footer-content {
@@ -406,6 +349,12 @@ footer {
     background-color: #e9c46a;
 }
 
+.footer-column p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #ccc;
+}
+
 .footer-links {
     list-style: none;
 }
@@ -415,7 +364,7 @@ footer {
 }
 
 .footer-links a {
-    color: #666;
+    color: #ccc;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -435,23 +384,24 @@ footer {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: #232323;
-    color: #fff;
+    background-color: #fff;
+    color: #232323;
     border-radius: 50%;
     margin-right: 10px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .social-icons a:hover {
     background-color: #e9c46a;
+    color: #232323;
 }
 
 .copyright {
     text-align: center;
     margin-top: 60px;
     padding-top: 20px;
-    border-top: 1px solid #ddd;
-    color: #666;
+    border-top: 1px solid #444;
+    color: #ccc;
     font-size: 0.9rem;
 }
 
@@ -483,12 +433,11 @@ footer {
 
 .modal-logo {
     text-align: center;
-    margin-top: -100px;
     margin-bottom: 15px;
 }
 
 .modal-logo .logo-img {
-    width: 224px;
+    width: 80px;
     height: auto;
 }
 
@@ -721,19 +670,6 @@ footer {
 
     .nav-menu {
         display: none;
-    }
-
-    .newsletter-form {
-        flex-direction: column;
-    }
-
-    .newsletter-form input {
-        margin-bottom: 10px;
-        border-radius: 5px;
-    }
-
-    .newsletter-form button {
-        border-radius: 5px;
     }
 
     .filter-bar {
