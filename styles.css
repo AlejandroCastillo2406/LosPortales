@@ -482,14 +482,12 @@ footer {
 }
 
 .modal-logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
+    text-align: center;
+    margin-bottom: 15px; /* Espacio entre el logo y el título */
 }
 
 .modal-logo .logo-img {
-    width: 40px; /* Ajusta el tamaño según el logo */
+    width: 80px; /* Tamaño ajustado para que sea visible encima del título */
     height: auto;
 }
 
@@ -661,6 +659,16 @@ footer {
     border: 3px solid #e9c46a; /* Contorno dorado */
 }
 
+.modal-logo {
+    text-align: center;
+    margin-bottom: 15px; /* Espacio entre el logo y el título o contenido */
+}
+
+.modal-logo .logo-img {
+    width: 80px; /* Tamaño ajustado para que sea visible */
+    height: auto;
+}
+
 .favorites-modal-content h2 {
     font-size: 2rem;
     margin-bottom: 20px;
@@ -762,6 +770,6 @@ footer {
     }
 
     .modal-logo .logo-img {
-        width: 30px; /* Ajuste para modales en pantallas pequeñas */
+        width: 50px; /* Ajuste para modales en pantallas pequeñas */
     }
 }
