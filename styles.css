@@ -14,7 +14,7 @@ body {
 /* Header y navegación */
 header {
     background-color: #232323;
-    padding: 20px 0;
+    padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -203,7 +203,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     padding: 0 20px;
     gap: 20px;
 }
@@ -640,20 +640,20 @@ footer {
     /* Header */
     .nav-container {
         flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 20px;
+        align-items: center; /* Center-align for better aesthetics */
+        padding: 15px 20px;
     }
 
     .logo-container {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 
     .logo-img {
-        width: 40px;
+        width: 45px;
     }
 
     .logo {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .nav-menu {
@@ -661,76 +661,98 @@ footer {
         flex-direction: column;
         width: 100%;
         margin: 0;
-        background-color: #333; /* Add background for visibility */
+        background-color: #2c2c2c; /* Slightly lighter background for contrast */
+        padding: 10px 0;
+        border-radius: 5px;
     }
 
     .nav-menu li {
-        margin: 10px 0;
+        margin: 12px 0;
+        text-align: center;
     }
 
     .nav-menu a {
-        font-size: 1rem;
-        padding: 10px 0;
+        font-size: 1.1rem; /* Larger font for readability */
+        padding: 12px 0;
         display: block;
-        color: #fff; /* Ensure text is visible */
+        color: #fff;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+        background-color: #e9c46a;
+        color: #232323;
+        border-radius: 5px;
     }
 
     .icons {
-        margin-top: 10px;
+        margin-top: 15px;
         width: 100%;
-        justify-content: flex-end;
+        justify-content: center;
+        gap: 20px;
     }
 
     .icon {
-        margin-left: 15px;
-        font-size: 1.5rem;
+        margin-left: 0;
+        font-size: 1.8rem; /* Larger icons for better tap targets */
     }
 
     /* Hero Section */
     .hero {
-        height: 50vh;
+        height: 40vh; /* Reduced height for mobile */
+        min-height: 300px; /* Ensure it’s not too small */
     }
 
     .section-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        margin-bottom: 30px;
     }
 
     .category-grid {
         gap: 15px;
+        padding: 0 10px;
     }
 
     .category-item {
-        width: 200px;
-        height: 280px;
+        width: 180px; /* Smaller width for mobile */
+        height: 240px; /* Smaller height for mobile */
     }
 
     .category-info h3 {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     /* Products Section */
     .products {
-        padding: 40px 0; /* Reduce padding for mobile */
+        padding: 40px 0; /* Reduced padding for mobile */
     }
 
     .filter-bar {
         flex-direction: column;
         gap: 15px;
+        padding: 0 15px;
+        margin-bottom: 20px;
     }
 
     #searchInput, #sortSelect {
         width: 100%;
-        font-size: 1rem;
-        padding: 10px;
+        font-size: 1.1rem; /* Larger font for readability */
+        padding: 12px;
     }
 
     .products-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller columns for mobile */
         gap: 20px;
+        padding: 0 15px;
+    }
+
+    .product-card {
+        border: 1px solid #232323; /* Thinner border for mobile */
     }
 
     .product-image {
-        height: 250px;
+        height: 200px; /* Smaller height for mobile */
     }
 
     .product-info h3 {
@@ -738,23 +760,30 @@ footer {
     }
 
     .favorite-btn {
-        width: 50px;
-        height: 50px;
+        width: 45px; /* Larger for better tap target */
+        height: 45px;
+        top: 10px;
+        right: 10px;
     }
 
     .favorite-btn svg {
-        width: 25px;
-        height: 25px;
+        width: 24px;
+        height: 24px;
     }
 
     /* Footer */
     .footer-content {
         grid-template-columns: 1fr; /* Stack columns vertically */
         gap: 30px;
+        padding: 0 15px;
     }
 
     .footer-column {
         text-align: center;
+    }
+
+    .footer-column h3 {
+        font-size: 1.2rem;
     }
 
     .footer-column h3::after {
@@ -762,18 +791,27 @@ footer {
         transform: translateX(-50%);
     }
 
+    .footer-column p, .footer-links li {
+        font-size: 1rem;
+    }
+
     .social-icons {
         justify-content: center;
     }
 
     .social-icons a {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
     }
 
     .social-icons a svg {
-        width: 24px;
-        height: 24px;
+        width: 22px;
+        height: 22px;
+    }
+
+    .copyright {
+        font-size: 0.9rem;
+        padding: 15px;
     }
 
     /* Modal (Producto) */
@@ -789,7 +827,7 @@ footer {
     }
 
     .modal-image {
-        height: 300px;
+        height: 250px; /* Smaller height for mobile */
         width: 100%;
     }
 
@@ -798,7 +836,7 @@ footer {
     }
 
     .modal-details h5 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
     .modal-details .description {
@@ -806,13 +844,13 @@ footer {
     }
 
     .modal-details .price {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .modal-close {
-        width: 50px;
-        height: 50px;
-        font-size: 2rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.8rem;
     }
 
     .carousel-control-prev, .carousel-control-next {
@@ -827,8 +865,8 @@ footer {
     }
 
     .action-icon {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
     }
 
     .whatsapp-share-icon .action-icon,
