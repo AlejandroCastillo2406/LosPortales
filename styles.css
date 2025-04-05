@@ -483,11 +483,12 @@ footer {
 
 .modal-logo {
     text-align: center;
+    margin-top: -100px;
     margin-bottom: 15px;
 }
 
 .modal-logo .logo-img {
-    width: 80px;
+    width: 124px;
     height: auto;
 }
 
