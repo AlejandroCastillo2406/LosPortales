@@ -1,3 +1,14 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+
+    hamburger.addEventListener('click', () => {
+        navMenu.classList.toggle('active');
+        const isExpanded = navMenu.classList.contains('active');
+        hamburger.setAttribute('aria-expanded', isExpanded);
+    });
+
 document.addEventListener('DOMContentLoaded', function() {
     let productos = [];
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
