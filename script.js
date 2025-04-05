@@ -1,18 +1,17 @@
-document.addEventListener('DOMContentLoaded',function() {
-    // Hamburger menu toggle
+document.addEventListener('DOMContentLoaded', () => {
+    // Hamburguesa
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-
     hamburger.addEventListener('click', () => {
         navMenu.classList.toggle('active');
         const isExpanded = navMenu.classList.contains('active');
         hamburger.setAttribute('aria-expanded', isExpanded);
+    });
 
     let productos = [];
     let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
     let productosFiltrados = [];
 
-    // Definir las categorías por sexo con imágenes
     const categoriasPorSexo = {
         mujer: [
             { nombre: 'Top', imagen: 'images/mujer-top.jpg', categoria: 'top' },
@@ -31,7 +30,6 @@ document.addEventListener('DOMContentLoaded',function() {
         ]
     };
 
-    // Función para mostrar categorías
     function mostrarCategorias(sexo) {
         const categoryGrid = document.getElementById('category-grid');
         categoryGrid.innerHTML = '';
@@ -54,7 +52,6 @@ document.addEventListener('DOMContentLoaded',function() {
         });
     }
 
-    // Función para mostrar productos
     function mostrarProductos(productosAMostrar) {
         const productsGrid = document.getElementById('products-grid');
         productsGrid.innerHTML = '';
@@ -77,7 +74,6 @@ document.addEventListener('DOMContentLoaded',function() {
             `;
             productsGrid.appendChild(card);
 
-            // Añadir evento al botón de favoritos
             const favoriteBtn = card.querySelector('.favorite-btn');
             favoriteBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -92,33 +88,27 @@ document.addEventListener('DOMContentLoaded',function() {
                 localStorage.setItem('favorites', JSON.stringify(favorites));
             });
 
-            // Añadir evento a toda la tarjeta para abrir el modal
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 const id = favoriteBtn.getAttribute('data-id');
                 const producto = productos.find(p => p.id == id);
 
-                // Configurar el contenido del modal
                 document.getElementById('productModalLabel').textContent = producto.nombre;
                 document.getElementById('productDescription').textContent = producto.descripcion;
                 document.getElementById('productPrice').textContent = producto.precio;
 
-                // Configurar enlace de WhatsApp (Contactar)
                 const whatsappLink = document.getElementById('whatsappLink');
                 const mensaje = `Hola, estoy interesado/a en la prenda "${producto.nombre}" que cuesta ${producto.precio}. ¿Tienes más información?`;
                 whatsappLink.href = `https://wa.me/+527822920667?text=${encodeURIComponent(mensaje)}`;
 
-                // Configurar enlace de WhatsApp (Compartir)
                 const whatsappShare = document.getElementById('whatsappShare');
                 const shareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive! ${window.location.href}`;
                 whatsappShare.href = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
 
-                // Configurar enlace de Facebook (Compartir)
                 const facebookShare = document.getElementById('facebookShare');
                 const urlToShare = window.location.href;
                 const fbShareText = `Mira esta prenda increíble: ${producto.nombre} por ${producto.precio} en Boutique Exclusive!`;
-                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}"e=${encodeURIComponent(fbShareText)}`;
+                facebookShare.href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlToShare)}&quote=${encodeURIComponent(fbShareText)}`;
 
-                // Configurar el carrusel
                 const carouselImages = document.getElementById('carouselImages');
                 carouselImages.innerHTML = '';
                 producto.imagenes.forEach((img, index) => {
@@ -176,7 +166,6 @@ document.addEventListener('DOMContentLoaded',function() {
         });
     }
 
-    // Función para mostrar favoritos
     function mostrarFavoritos() {
         const favoritesList = document.getElementById('favoritesList');
         favoritesList.innerHTML = '';
@@ -202,7 +191,6 @@ document.addEventListener('DOMContentLoaded',function() {
         document.getElementById('favoritesModal').style.display = 'flex';
     }
 
-    // Función para ordenar productos
     function ordenarProductos(productos, criterio) {
         if (criterio === 'price-asc') {
             return [...productos].sort((a, b) => parseFloat(a.precio.replace('$', '')) - parseFloat(b.precio.replace('$', '')));
@@ -212,7 +200,6 @@ document.addEventListener('DOMContentLoaded',function() {
         return productos;
     }
 
-    // Cargar productos desde ropa.json
     fetch('data/ropa.json')
         .then(response => {
             if (!response.ok) {
@@ -275,7 +262,6 @@ document.addEventListener('DOMContentLoaded',function() {
         })
         .catch(error => console.error('Error al cargar el JSON:', error));
 
-    // Cerrar modales
     const productModal = document.getElementById('productModal');
     const favoritesModal = document.getElementById('favoritesModal');
     const productModalClose = document.getElementById('modalClose');
